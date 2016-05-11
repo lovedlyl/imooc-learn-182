@@ -1,0 +1,31 @@
+{
+  "name": "imooc-learn-182",
+  "version": "1.0.0",
+  "description": "imooc 基于bootstrap的网页开发",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lovedlyl/imooc-learn-182.git"
+  },
+  "keywords": [
+    "imooc",
+    "基于bootstrap的网页开发"
+  ],
+  "author": "claudio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lovedlyl/imooc-learn-182/issues"
+  },
+  "homepage": "https://github.com/lovedlyl/imooc-learn-182#readme",
+  "devDependencies": {
+    "browser-sync": "^2.12.7",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.0.1"
+  }
+}
