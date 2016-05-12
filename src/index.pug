@@ -71,7 +71,12 @@ block content
 			#intro .col-md-5{
 				margin-top: 10px;
 			}
-
+			#intro .nav li a{
+				//- margin: ;
+				padding-left: 6px;
+				padding-right: 6px;
+				outline: none;
+			}
 		}
 	//- 顶部导航
 	nav(role="navigation").navbar.navbar-inverse.navbar-fixed-top
@@ -81,7 +86,7 @@ block content
 				a(href="#").navbar-brand 现代浏览器博物馆
 			#head-nav.collapse.navbar-collapse.navbar-responsive
 				ul.nav.navbar-nav
-					li.active: a(href="#ad-carousel") 综述
+					li: a(href="#ad-carousel") 综述
 					li: a(href="#summary") 简介
 					li.dropdown 
 						a(href="#", data-toggle="dropdown", role="button").dropdown-toggle 特点
@@ -89,7 +94,7 @@ block content
 						ul.dropdown-menu(role="menu")
 							each b in browsers
 								li: a(href="#"+b.name) #{b.name}
-					li: a(href="#", data-toggle="modal", data-target="#modal") 关于
+					li.active: a(href="#", data-toggle="modal", data-target="#modal", data-show="true") 关于
 
 
 
@@ -121,7 +126,7 @@ block content
 	.container: hr.divider
 	//- 选项卡部分
 	#intro.container
-		ul.nav.nav-tabs(tole="tablist")
+		ul.nav.nav-tabs(role="tablist")
 			each b, i in browsers
 				-var show = ""
 				if (i == 0)
@@ -170,9 +175,13 @@ block content
 						span.sr-only Close
 					h4.modal-title 关于
 				.modal-body
-					p 慕课网隶属于北京慕课科技中心(有限合伙)，是一家从事互联网免费教学的网络教育公司。秉承“开拓、创新、公平、分享”的精神， 将互联网特性全面的应用在教育领域，致力于为教育机构及求学者打造一站式互动在线教育品牌
+					p 参考
+						a(href="http://www.imooc.com/learn/182", target="_blank") 慕课网
+						|制作
+					p: a(href="https://github.com/lovedlyl/imooc-learn-182", target="_blank") 查看源码
+						span.pull-right.text-primary &copy; claudio
 				.modal-footer
-					button.btn.btn-default(type="button", data-dismiss="modal") 了解了
+					button.btn.btn-default(type="button", data-dismiss="modal") 了解
 	script.
 		$(function(){
 			$(".dropdown-menu > li").click(function(e){
@@ -183,5 +192,6 @@ block content
 					console.log(tab.fn)
 					$(document).scrollTop(tabTop - 70);
 					tab.tab("show")
-				})
+				});
+			$("#modal").modal("show");
 			})
