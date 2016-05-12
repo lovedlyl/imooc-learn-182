@@ -14,6 +14,7 @@ gulp.task("convertPug", function() {
         .pipe(pug({ pretty: false }))
         .pipe(plumber.stop())
         .pipe(gulp.dest("dist"))
+        .pipe(gulp.dest("../lovedlyl.github.io/imooc-learn-182"))
         .pipe(stream());
 });
 
@@ -22,11 +23,11 @@ var lib = function() {
     // 样式
     gulp.src(["bower_components/bootstrap/dist/css/bootstrap.min.css"])
         // .pipe(concat("bootstrap.css"))
-        .pipe(gulp.dest("../lovedlyl.github.io/learn-bootstrap/styles"))
+        .pipe(gulp.dest("../lovedlyl.github.io/imooc-learn-182/styles"))
         .pipe(gulp.dest("dist/styles"));
     // 字体文件
     gulp.src(["bower_components/bootstrap/dist/fonts/*"])
-        .pipe(gulp.dest("../lovedlyl.github.io/learn-bootstrap/fonts"))
+        .pipe(gulp.dest("../lovedlyl.github.io/imooc-learn-182/fonts"))
         .pipe(gulp.dest("dist/fonts"))
 
     // 脚本
@@ -34,7 +35,7 @@ var lib = function() {
             "bower_components/bootstrap/dist/js/bootstrap.min.js"
         ])
         .pipe(concat("bootstrap.js"))
-        .pipe(gulp.dest("../lovedlyl.github.io/learn-bootstrap/scripts"))
+        .pipe(gulp.dest("../lovedlyl.github.io/imooc-learn-182/scripts"))
         .pipe(gulp.dest("dist/scripts"))
 }
 
@@ -46,6 +47,7 @@ var images = function() {
     gulp.src("src/images/*")
         .pipe(imagemin())
         .pipe(gulp.dest("dist/images"))
+        .pipe(gulp.dest("../lovedlyl.github.io/imooc-learn-182/images"))
 }
 images();
 gulp.task("images", images);
@@ -53,7 +55,8 @@ gulp.task("images", images);
 
 gulp.task("default", function() {
     browserSync.init({
-        server: "dist"
+        // server: "dist"
+        server: "../lovedlyl.github.io/imooc-learn-182"
     });
 
     gulp.watch("src/*.pug", ["convertPug"])

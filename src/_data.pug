@@ -1,0 +1,43 @@
+//- name: 浏览器名称
+	title: 简单描述
+	url: 官网下载地址
+	ad: 噱头
+	summary: 更详细的介绍
+-var chrome = {ad: "使用最广的浏览器", summary: "Google Chrome，又称Google浏览器，是一个由Google（谷歌）公司开发的网页浏览器。该浏览器是基于其他开源软件所撰写，包括WebKit，目标是提升稳定性、速度和安全性，并创造出简单且有效率的使用者界面。", name: "Chrome", title: "Google Chrome，又称Google浏览器，是一个由Google（谷歌）公司开发的网页浏览器", url: "http://www.google.cn/intl/zh-CN/chrome/browser/" }
+-var firefox = {ad: "美丽的狐狸", summary: "Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器，使用Gecko引擎（非ie内核），支持多种操作系统如Windows、Mac和linux。", name: "Firefox", title: "Mozilla Firefox，中文名通常称为“火狐”或“火狐浏览器”，是一个开源网页浏览器。", url: "http://www.firefox.com.cn/download/"}
+-var safari = {ad: "Mac用户首选", summary: "Safari，是苹果计算机的最新操作系统Mac OS X中的浏览器，使用了KDE的KHTML作为浏览器的运算核心。 Safari在2003年1月7日首度发行测试版，并成为Mac OS X v10.3与之后的默认浏览器，也是iPhone与IPAD和iPod touch的指定浏览器。", name: "Safari", title: "Safari，是苹果计算机的最新操作系统Mac OS X中的浏览器。", url: "http://www.apple.com/cn/safari/"}
+-var opera = {ad: "小众但易用", summary: "Opera浏览器，是一款挪威Opera Software ASA公司制作的支持多页面标签式浏览的网络浏览器。 是跨平台浏览器可以在Windows、Mac和Linux三个操作系统平台上运行", name: "Opera", title: "Opera浏览器，是一款挪威Opera Software ASA公司制作的支持多页面标签式浏览的网络浏览器。", url: "http://www.opera.com/zh-cn"}
+-var ie = {ad: "你懂的", summary: "Internet Explorer，原称Microsoft Internet Explorer(6版本以前)和Windows Internet Explorer(7，8，9，10版本)， 简称IE，是美国微软公司推出的一款网页浏览器。它采用的排版引擎(俗称内核)为Trident", name: "IE", title: "Internet Explorer，简称 IE，是微软公司推出的一款网页浏览器。", url: "http://ie.microsoft.com/"}
+
+-var browsers = [chrome, firefox, safari, opera, ie]
+
+
+mixin carousel(options)
+	-var selector = options.selector
+	-var items = options.items
+	-var i = 0
+	.carousel.slide(data-ride="carousel", id=selector.substring(1), data-interval="2000")
+		ol.carousel-indicators
+			while (i<items)
+				if (i == 0)
+					li(data-target=selector, data-slide-to=i).active
+				else
+					li(data-target=selector, data-slide-to=i)
+				-i++
+		.carousel-inner
+			if block
+				block
+		a(href=selector, data-slide="prev").carousel-control.left
+			span.glyphicon.glyphicon-chevron-left
+		a(href=selector, data-slide="next").carousel-control.right
+			span.glyphicon.glyphicon-chevron-right
+
+
+
+
+mixin responsiveNavbarButtons(selector)
+	button(type="button", data-toggle="collapse", data-target=selector).navbar-toggle.collapsed
+		span.sr-only 切换导航
+		each i in [1,2,4]
+			span.icon-bar
+

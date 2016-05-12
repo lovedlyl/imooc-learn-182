@@ -2,7 +2,186 @@ extends layout
 
 
 block title 
-	title 我现代浏览器博物馆
+	title 现代浏览器博物馆
 
 block content
-	p.lead.text-primary hello world
+	include _data
+	style.
+		body{
+			padding-top: 50px;
+			padding-bottom: 70px;
+		}
+		#ad-carousel{
+				margin-bottom: 60px;
+		}
+		#ad-carousel, #ad-carousel .item{
+			height: 500px;
+			bacground-color: #000;
+		}
+		#ad-carousel img{
+			width: 100%;
+		}
+
+		#ad-carousel .carousel-caption p{
+			margin-bottom: 20px;
+			font-size: 20px;
+			line-height: 1.8;
+		}
+		#summary .thumbnail{
+			border: none;
+		}
+
+
+		#intro h2{
+			margin-top: 120px;
+			font-size: 50px;
+		}
+		#intro p{
+			font-size: 20px;
+		}
+		#intro .col-md-5{
+			margin-top: 20px;
+		}
+		hr.divider{
+			margin: 40px 0;
+		}
+		@media(max-width: 768px){
+			#ad-carousel{
+					margin-bottom: 30px;
+			}
+			#ad-carousel, #ad-carousel .item{
+				height: 300px;
+				bacground-color: #000;
+			}
+			#ad-carousel img{
+				min-height: 300px;
+			}	
+
+			#ad-carousel .carousel-caption p{
+				font-size: 16px;
+				line-height: 1.4;
+			}
+			#intro h2{
+				margin-top: 20px;
+				font-size: 14px;
+			}
+			#intro p{
+				font-size: 10px;
+			}
+			#intro .col-md-5{
+				margin-top: 10px;
+			}
+
+		}
+	//- 顶部导航
+	nav(role="navigation").navbar.navbar-inverse.navbar-fixed-top
+		.container
+			.navbar-header
+				+responsiveNavbarButtons("#head-nav")
+				a(href="#").navbar-brand 现代浏览器博物馆
+			#head-nav.collapse.navbar-collapse.navbar-responsive
+				ul.nav.navbar-nav
+					li.active: a(href="#ad-carousel") 综述
+					li: a(href="#summary") 简介
+					li.dropdown 
+						a(href="#", data-toggle="dropdown", role="button").dropdown-toggle 特点
+							span.caret
+						ul.dropdown-menu(role="menu")
+							each b in browsers
+								li: a(href="#"+b.name) #{b.name}
+					li: a(href="#", data-toggle="modal", data-target="#modal") 关于
+
+
+
+	//-图片轮播
+	+carousel({selector: "#ad-carousel", items: browsers.length})
+		each b, i in browsers
+			-var show = ""
+			if (i == 0)
+				-show = "active"
+			.item(class= show)
+				img(src="images/" + b.name.toLowerCase() + "-big.jpg", alt= b.name)
+				.container
+					.carousel-caption
+						h1 #{b.name}
+						p #{b.title}
+						p: a(role="button", href=b.url, target="_blank").btn.btn-primary.btn-lg 点我下载
+
+	//- 简介
+	#summary.container
+		.row
+			each b in browsers.slice(0, 3)
+				.col-md-4
+					.thumbnail.text-center
+						img(src="images/" + b.name.toLowerCase() + "-logo-small.jpg", alt="").img-responsive
+						.caption
+							h3 #{b.name}
+							p #{b.title}
+							p: a(role="button", href=b.url, target="_blank").btn.btn-default 点我下载
+	.container: hr.divider
+	//- 选项卡部分
+	#intro.container
+		ul.nav.nav-tabs(tole="tablist")
+			each b, i in browsers
+				-var show = ""
+				if (i == 0)
+					-show = "active" 
+				li(role="presentation", class=show)
+					a(href="#"+b.name, role="tab", data-toggle="tab") #{b.name}
+		.tab-content
+			each b, i in browsers
+				-var show = ""
+				if (i == 0)
+					-show = "active in"
+				//- 控制图片显示位置, 错落显示
+				.tab-pane.fade(class=show, role="tabpanel", id=b.name)
+					.container
+						if ((i & 1) == 0)
+							.row
+								.col-xs-7.col-sm-7.col-md-7.col-lg-7 
+									h2.text-primary #{b.name} 
+										span.text-muted #{b.ad}
+									p.text-muted #{b.summary}								
+								.col-xs-5.col-sm-5.col-md-5.col-lg-5 
+									img(src="images/" + b.name.toLowerCase() + "-logo.jpg").img-responsive
+						else 
+							.row
+								.col-xs-5.col-sm-5.col-md-5.col-lg-5
+									img(src="images/" + b.name.toLowerCase() + "-logo.jpg").img-responsive
+								.col-xs-7.col-sm-7.col-md-7.col-lg-7
+									h2.text-primary #{b.name} 
+										span.text-muted #{b.ad}
+									p.text-muted #{b.summary}
+
+	//- 页尾
+	.container: hr.divider
+
+	footer.container
+		p.pull-right: a(href="#top") 返回顶部
+		p &copy; 2014 慕课网
+
+	//a.btn.btn-primary(data-toggle="modal", href="#modal") Trigger modal
+	#modal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true") &times;
+						span.sr-only Close
+					h4.modal-title 关于
+				.modal-body
+					p 慕课网隶属于北京慕课科技中心(有限合伙)，是一家从事互联网免费教学的网络教育公司。秉承“开拓、创新、公平、分享”的精神， 将互联网特性全面的应用在教育领域，致力于为教育机构及求学者打造一站式互动在线教育品牌
+				.modal-footer
+					button.btn.btn-default(type="button", data-dismiss="modal") 了解了
+	script.
+		$(function(){
+			$(".dropdown-menu > li").click(function(e){
+					var link = $(this).find("a");
+					var href = link.attr("href");
+					var tab = $(".nav-tabs a[href='" + href + "']");
+					var tabTop = tab.offset().top;
+					console.log(tab.fn)
+					$(document).scrollTop(tabTop - 70);
+					tab.tab("show")
+				})
+			})
